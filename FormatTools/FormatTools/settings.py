@@ -137,4 +137,4 @@ MEDIA_URL = '/media/'
 TEMPORAL_FILES_ROOT = os.path.join(MEDIA_ROOT, 'files/')
 
 # DOMAIN SETTINGS
-FQDN = 'http://127.0.0.1:8000/'
+FQDN = os.environ.get('FQDN', 'http://127.0.0.1:8000/')
