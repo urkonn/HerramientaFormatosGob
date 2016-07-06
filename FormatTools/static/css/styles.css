@@ -1,0 +1,126 @@
+body { font-family: "Open Sans"; font-size: 16px; font-weight: 300; line-height: 1.8em; color: #595959; }
+h1 { font-size: 24px; font-weight: 600; color: #545454; }
+h2 { font-size: 20px; font-weight: 600; color: #343434; }
+
+section {
+  margin: 30px 0;
+}
+
+.container-fluid {
+  max-width: 1100px;
+}
+
+.text-higlight {
+    color: #0c9;
+}
+
+.btn {
+    display: block;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding: 13px 40px;
+}
+
+.btn.btn-primary {
+    background-color: #0c9;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #05aa81;
+}
+
+.btn-primary[disabled]{
+  background-color: #9b9b9b;
+}
+
+.btn-primary[disabled]:hover{
+  background-color: #9b9b9b;
+}
+
+form .btn-primary {
+  padding: 18px 70px;
+  background-color: #0c9;
+  color: #FFFFFF;
+  margin: 0 auto;
+}
+
+form .btn-primary:hover {
+  background-color: #05aa81;
+  color: #FFFFFF;
+}
+
+.opacity-text {
+  color: #b7b7b7;
+  cursor: no-drop;
+}
+
+.dz-preview a {
+  cursor: pointer !important;
+  color: #585858;
+  font-size: 14px;
+}
+
+.dropzone .dz-preview .dz-error-mark svg g { fill: #d43f3a; }
+.dropzone .dz-preview .dz-success-mark svg g { fill: #00b98b; }
+
+#feedback{ color: #FFFFFF;}
+.note .underline { text-decoration: underline }
+.grand-row { margin: 60px 0 }
+
+.icon {
+  width: 50px;
+  height: 55px;
+  display: inline-block;
+  -webkit-mask-size: cover !important;
+  mask-size: cover !important;
+  border: none;
+}
+
+.icon-drop {
+  width: 50px;
+  height: 55px;
+  display: inline-block;
+  -webkit-mask-size: cover !important;
+  mask-size: cover !important;
+  border: none;
+}
+
+svg {width: 50px; height: 55px;}
+.icon-disabled { cursor: no-drop;}
+.icon svg path {fill: #313131 !important;}
+.icon-drop svg path {fill: #313131 !important;}
+.icon-disabled svg path {fill: #a2a2a2 !important;}
+
+.icon:hover svg path {fill: #0c9 !important;}
+
+.icon-xml {
+  -webkit-mask: url(../svg/xml.svg) no-repeat 50% 50%;
+  mask: url(../svg/xml.svg) no-repeat 50% 50%;
+}
+
+.button-higlight svg path  {
+    fill: #0c9 !important;
+}
+
+.dropzone .dz-preview.dz-file-preview .dz-image {
+    border-radius: 20px;
+    background: transparent;
+}
+
+.dropzone .dz-preview {
+    margin: 0;
+    width: 85%;
+}
+
+.dropzone .dz-preview .dz-progress {
+  left: 0;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.dropzone .dz-preview .dz-details {
+    padding: 3em 1em;
+}

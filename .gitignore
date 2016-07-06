@@ -1,0 +1,6 @@
+*.pyc
+/FormatTools/media/files/json/*.json
+/FormatTools/media/files/csv/*.csv
+/FormatTools/media/files/xml/*.xml
+/FormatTools/media/files/html/*.html
+/FormatTools/media/files/txt/*.txt

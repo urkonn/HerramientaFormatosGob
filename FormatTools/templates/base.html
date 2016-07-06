@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Herramienta de transformacion de formatos">
+    <meta name="viewport" content="width=device-width">
+    <title>Herramienta de formatos</title>
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="http://datos.gob.mx/static/css/vendor.2107989e.css">
+    <link rel="stylesheet" href="http://datos.gob.mx/static/css/style.4a96c47a.css">
+    <link rel="import" href="http://datos.gob.mx/static/bower_components/polymer/polymer.html">
+    <link rel="import" href="http://datos.gob.mx/static/bower_components/dgm-navbar/dgm-navbar.html">
+    <link rel="import" href="http://datos.gob.mx/static/bower_components/dgm-footer/dgm-footer.html">
+    {% block css_links %}{% endblock %}
+</head>
+<body>
+    <dgm-navbar></dgm-navbar>
+    {% block content %}
+    {% endblock content %}
+    <dgm-footer></dgm-footer>
+    {% block script_js %}{% endblock %}
+    <script src="http://datos.gob.mx/ckan/assets/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script type="text/javascript">
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
