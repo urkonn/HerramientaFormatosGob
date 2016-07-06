@@ -1,15 +1,16 @@
-# HerramientaFormatosGob
+HerramientaFormatosGob
+======================
 Herramienta para convertir formatos XLS, XLSX a formatos abiertos. Esta herramienta esta construida en la ultima versión de Django (1.9.7). 
 
 Requermimientos
 ===============
-° Python 2.7
-° .. _Virtualenv: https://virtualenv.pypa.io/en/stable/
+- Python 2.7
+- .. _Virtualenv: https://virtualenv.pypa.io/en/stable/
 
 
 Instalación Local
 =================
-Los siguientes pasos asumen que se han instalado los requerimientos señalados anteriormente::
+Los siguientes pasos asumen que se han instalado los requerimientos señalados anteriormente. Correr los siguientes comandos::
 
   git clone git@github.com:vaquer/HerramientaFormatosGob.git
   virtualenv {{TU_VIRTUALENV}}
