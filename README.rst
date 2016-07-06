@@ -5,7 +5,9 @@ Herramienta para convertir formatos XLS, XLSX a formatos abiertos. Esta herramie
 Requermimientos
 ===============
 - Python 2.7
-- .. _Virtualenv: https://virtualenv.pypa.io/en/stable/
+- Virtualenv_
+
+.. _Virtualenv: https://virtualenv.pypa.io/en/stable/
 
 
 Instalación Local
