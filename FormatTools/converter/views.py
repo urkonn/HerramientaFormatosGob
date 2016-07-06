@@ -24,15 +24,18 @@ def convert_to(request):
         raise Http404
 
     # Se obtiene el objeto para convertir el archivo dependiendo del formato
-    converter_engine = XLSConverter.get_converter(format_to, xls_file)
+    try:
+        converter_engine = XLSConverter.get_converter(format_to, xls_file)
+    except Exception, file_error:
+        return JsonResponse({'status': 'error', 'error': '{0}'.format(file_error)})
 
     if not converter_engine:
         raise Http404
 
     try:
         return JsonResponse({'status': 'ok', 'link': converter_engine.convert()})
-    except Exception, e:
-        return JsonResponse({'status': 'error', 'error': '{0}'.format(e)})
+    except Exception, convert_error:
+        return JsonResponse({'status': 'error', 'error': '{0}'.format(convert_error)})
 
 
 def download_file(request, path, file_name):
