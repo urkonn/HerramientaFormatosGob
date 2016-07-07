@@ -5,6 +5,56 @@
   <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
   <link rel="stylesheet" href="{% static "css/dropzone.css" %}">
   <link rel="stylesheet" href="/static/css/styles.css?47879">
+  <link rel="stylesheet" href="https://github.com/tobiasahlin/SpinKit/blob/master/css/spinkit.css">
+  <style type="text/css">
+      .text-loading {top: 50%; position: absolute; right: 25%;}
+      .text-loading h4 {font-weight: bold;}
+      .loading-document {position: absolute; z-index: 200; background-color: #e6e6e6; opacity: 0.8; width: 100%; height: 100%; top: 0; display: none;}
+
+      .sk-wave {
+        position: absolute; right: 47%; top: 50%;
+        margin: 40px auto;
+        width: 50px;
+        height: 40px;
+        text-align: center;
+        font-size: 10px; }
+        .sk-wave .sk-rect {
+          background-color: #0c9;
+          height: 100%;
+          width: 6px;
+          display: inline-block;
+          -webkit-animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
+                  animation: sk-waveStretchDelay 1.2s infinite ease-in-out; }
+        .sk-wave .sk-rect1 {
+          -webkit-animation-delay: -1.2s;
+                  animation-delay: -1.2s; }
+        .sk-wave .sk-rect2 {
+          -webkit-animation-delay: -1.1s;
+                  animation-delay: -1.1s; }
+        .sk-wave .sk-rect3 {
+          -webkit-animation-delay: -1s;
+                  animation-delay: -1s; }
+        .sk-wave .sk-rect4 {
+          -webkit-animation-delay: -0.9s;
+                  animation-delay: -0.9s; }
+        .sk-wave .sk-rect5 {
+          -webkit-animation-delay: -0.8s;
+                  animation-delay: -0.8s; }
+      @-webkit-keyframes sk-waveStretchDelay {
+        0%, 40%, 100% {
+          -webkit-transform: scaleY(0.4);
+                  transform: scaleY(0.4); }
+        20% {
+          -webkit-transform: scaleY(1);
+                  transform: scaleY(1); } }
+      @keyframes sk-waveStretchDelay {
+        0%, 40%, 100% {
+          -webkit-transform: scaleY(0.4);
+                  transform: scaleY(0.4); }
+        20% {
+          -webkit-transform: scaleY(1);
+                  transform: scaleY(1); } }
+  </style>
   {% comment %}
     
   <link rel="stylesheet" href="{% static "css/styles.css" %}">
@@ -17,11 +67,11 @@
 
 {% block content %}
     <div class="container-fluid" style="margin-top: 15px;">
-        <div class="row">            
-            <div class="col-md-12">                
+        <div class="row">
+            <div class="col-md-12">
               <h1 class="text-higlight">Convierte tus archivos</h1>
                   <p>
-                    Esta herramienta te permite transformar un documento de Excel (.xls) a formatos abiertos cómo .csv, .html, .xls y .txt.
+                    Esta herramienta te permite transformar un documento de Excel (.xls) a formatos abiertos cómo .csv, .html, .xml, .json y .txt.
                   </p>
                   <button type="button" style="margin: 25px auto 0;" class="btn btn-primary" data-toggle='modal' data-target='.modal-home'>Recomendaciones</button>
 
@@ -46,7 +96,7 @@
                       <div class="col-sm-8 col-sm-offset-3">
                         <div class="col-sm-2">
                           <a href="javascript:void(0);" data-type="xml" class="icon-select icon-disabled">
-                              <image src="{% static "svg/xml.svg" %}" class="svg">
+                                <image src="{% static "svg/xml.svg" %}" class="svg">
                           </a>
                         </div>
                         <div class="col-sm-2">
@@ -78,6 +128,19 @@
             </div>
         </div>
     </div>
+    <div class="loading-document">
+      <div class="text-loading">
+        <h4>Por favor espera... Tu documento está siendo analizado y transformado</h4>
+      </div>  
+      
+      <div class="sk-wave">        
+        <div class="sk-rect sk-rect1"></div>
+        <div class="sk-rect sk-rect2"></div>
+        <div class="sk-rect sk-rect3"></div>
+        <div class="sk-rect sk-rect4"></div>
+        <div class="sk-rect sk-rect5"></div>
+      </div>
+    </div>
     !-- Modal -->
       <div class="modal fade modal-home" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -87,7 +150,13 @@
               <h4 class="modal-title">Recomendaciones</h4>
             </div>
             <div class="modal-body">
-                <p>Archivos permitidos: XLS y XLSX.</p>
+                 <ol>
+                  <li>Archivos permitidos: XLS y XLSX.</li>
+                  <li>Solo se puede transformar un archivo a la vez.</li>
+                  <li>El contenido del documento debe existir unicamente en una hoja de trabajo.</li>
+                  <li>La información debe estar ordenada por columnas.</li>
+                  <li>Todas las columnas deben contener un título para que el resultado sea legible correctamente.</li>
+                </ol>
             </div>
           </div>
         </div>
@@ -99,5 +168,5 @@
 <script src="{% static "js/bootstrap.min.js" %}"></script>
 <script src="/static/js/dropzone.js?12312"></script>
 <script src="{% static "js/sweetalert.min.js" %}"></script>
-<script src="/static/js/main.js?123120"></script>
+<script src="/static/js/main.js?123121"></script>
 {% endblock %}

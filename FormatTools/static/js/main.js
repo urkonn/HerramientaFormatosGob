@@ -94,12 +94,13 @@ var dropzone = new Dropzone('#my-awesome-dropzone', {
       if(response.status === 'ok'){
         swal({
           confirmButtonText: "DESCARGAR",
-          title: "Éxtio",
+          title: "Éxito",
           text: "Archivo convertido correctamente",
           type: "success" },
         function(){
           window.open(response.link,'_blank');
         });
+        $('.loading-document').css('display', 'none');
       }
 
       if(response.status === 'error'){
@@ -122,8 +123,9 @@ var dropzone = new Dropzone('#my-awesome-dropzone', {
       e.preventDefault();
       e.stopPropagation();
       myDropzone.processQueue();
-      $("#feedback").show().text("Por favor espera... Tu documento está siento analizado y transformado");
+      $("#feedback").show().text("Por favor espera... Tu documento está siendo analizado y transformado");
       $("#remove-button").hide();
+      $('.loading-document').css('display', 'block');
     });
 
   },
