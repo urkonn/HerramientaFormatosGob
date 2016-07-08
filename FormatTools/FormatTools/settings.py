@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', None)
+SECRET_KEY = '1z!0=s-_u)y90mt8^v*d-@0@^hr^vz84m#eu%6hvxyn&7mm*$q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -137,4 +137,4 @@ MEDIA_URL = '/media/'
 TEMPORAL_FILES_ROOT = os.path.join(MEDIA_ROOT, 'files/')
 
 # DOMAIN SETTINGS
-FQDN = os.environ.get('FQDN', 'http://127.0.0.1:8000/')
+FQDN = 'http://127.0.0.1:8000/'
