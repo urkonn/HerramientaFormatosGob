@@ -1,5 +1,4 @@
 import os
-import xlrd
 import csv
 import json
 import datetime
@@ -58,7 +57,6 @@ class XLSConverterBase(object):
         """
         self.memory_file = kwargs.get('memory_file', None)
         self.save_temporal_file()
-        #self.xls_file = xlrd.open_workbook(self.get_path_temporal_xls(), encoding_override="cp1252", on_demand = True)
         self.xls_file = load_workbook(self.get_path_temporal_xls(), use_iterators=True, read_only=True)
         self.principal_sheet = self.xls_file.get_sheet_by_name(self.xls_file.sheetnames[0])
 
