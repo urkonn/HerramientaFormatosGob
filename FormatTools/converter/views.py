@@ -44,6 +44,7 @@ def download_file(request, path, file_name):
     Tipo Respuesta: HTTP RESPONSE Streaming
     """
 
+    xls_base = os.path.join(settings.TEMPORAL_FILES_ROOT, 'xls/')
     # Se recupera el archivo temporal
     try:
         path_base = os.path.join(settings.TEMPORAL_FILES_ROOT, path)
@@ -53,9 +54,13 @@ def download_file(request, path, file_name):
 
     # Se genera la respuesta HTTP para la descarga
     response = StreamingHttpResponse((line for line in file), content_type='{0}'.format(XLSConverter.get_mime_type_of_file(path)))
-    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name)
+    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name.encode('utf-8'))
     
     # Se elimina el archivo temporal del disco duro
     os.remove(os.path.join(path_base, file_name))
+    try:
+        os.remove(os.path.join(xls_base, file_name.replace(path, 'xls')))
+    except:
+        os.remove(os.path.join(xls_base, file_name.replace(path, 'xlsx')))
 
     return response

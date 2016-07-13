@@ -4,3 +4,5 @@
 /FormatTools/media/files/xml/*.xml
 /FormatTools/media/files/html/*.html
 /FormatTools/media/files/txt/*.txt
+/FormatTools/media/files/xls/*
+
