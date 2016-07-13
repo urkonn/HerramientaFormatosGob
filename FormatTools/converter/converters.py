@@ -1,24 +1,31 @@
 import os
 import csv
 import json
+import xlrd
 import datetime
 from openpyxl import load_workbook
 from django.conf import settings
 
 
-def encode_row(row, txt_convert=False):
+def encode_row(row, txt_convert=False, is_xlsx=False):
     """ Funcion que valida el encoding de un valor 
     para manejo del utf-8 en la clase csv
     """
     for item in row:
-        value = item.value
-        if type(value) == datetime.datetime:
-            yield value.strftime('%Y-%m-%dT%H:%M:%SZ')
+        if is_xlsx:
+            value = item.value
+            if type(value) == datetime.datetime:
+                yield value.strftime('%Y-%m-%dT%H:%M:%SZ')
+            else:
+                if txt_convert:
+                    yield value.encode('utf-8') if type(value) == type(u'') else str(value)
+                else:
+                    yield value.encode('utf-8') if type(value) == type(u'') else value
         else:
             if txt_convert:
-                yield value.encode('utf-8') if type(value) == type(u'') else str(value)
+               yield item.encode('utf-8') if type(item) == type(u'') else str(item)
             else:
-                yield value.encode('utf-8') if type(value) == type(u'') else value
+                yield item.encode('utf-8') if type(item) == type(u'') else item
 
 
 class XLSConverter:
@@ -57,8 +64,14 @@ class XLSConverterBase(object):
         """
         self.memory_file = kwargs.get('memory_file', None)
         self.save_temporal_file()
-        self.xls_file = load_workbook(self.get_path_temporal_xls(), use_iterators=True, read_only=True)
-        self.principal_sheet = self.xls_file.get_sheet_by_name(self.xls_file.sheetnames[0])
+        self.is_xlsx = True if '.xlsx' in self.memory_file.name else False
+
+        if self.is_xlsx:
+            self.xls_file = load_workbook(self.get_path_temporal_xls(), use_iterators=True, read_only=True)
+            self.principal_sheet = self.xls_file.get_sheet_by_name(self.xls_file.sheetnames[0])
+        else:
+            self.xls_file = xlrd.open_workbook(self.get_path_temporal_xls(), encoding_override="cp1252", on_demand = True)
+            self.principal_sheet = self.xls_file.sheet_by_index(0)
 
     def save_temporal_file(self):
         with open(self.get_path_temporal_xls(), 'w') as temporal_file:
@@ -73,10 +86,11 @@ class XLSConverterBase(object):
             return []
 
         def xls_row_generator():
-            for index_row in xrange(self.principal_sheet.rows):
-                yield self.principal_sheet.row_values(index_row)
+            if not self.is_xlsx:
+                for index_row in xrange(self.principal_sheet.nrows):
+                   yield self.principal_sheet.row_values(index_row)
 
-        return self.principal_sheet.rows
+        return self.principal_sheet.rows if self.is_xlsx else xls_row_generator()
 
     def get_name_file(self):
         """ Funcion que devuelve una funcion generadora
@@ -136,10 +150,10 @@ class XLSToCSVConverter(XLSConverterBase):
         super(XLSToCSVConverter, self).__init__(*args, **kwargs)
 
     def convert(self):
-        def converter_generator():
+        def converter_generator_xlsx():
+            index_row = 0
             with open(self.get_path_file(), 'w') as json_file:
                 self.csv_writer = csv.writer(json_file)
-                index_row = 0
                 for row in self.get_rows_of_xls():
                     if index_row >= self.principal_sheet.max_row:
                         break
@@ -149,7 +163,15 @@ class XLSToCSVConverter(XLSConverterBase):
 
             return u'{0}converter/{1}/{2}'.format(settings.FQDN, self.format_extension, self.get_name_file())
 
-        return converter_generator()
+        def converter_generator_xls():
+            with open(self.get_path_file(), 'w') as json_file:
+                self.csv_writer = csv.writer(json_file)
+                for row in self.get_rows_of_xls():
+                    self.csv_writer.writerow(list(encode_row(row)))
+
+            return u'{0}converter/{1}/{2}'.format(settings.FQDN, self.format_extension, self.get_name_file())
+
+        return converter_generator_xlsx() if self.is_xlsx else converter_generator_xls()
 
     @staticmethod
     def get_mime_type():
@@ -170,11 +192,12 @@ class XLSToJSONConverter(XLSConverterBase):
             separator = ''
 
             with open(self.get_path_file(), 'w') as json_file:
-                json_file.write("{{name: \"{0}\", count_rows: {1}, rows: [".format(self.get_clean_name_file().encode('utf-8'), self.principal_sheet.max_row))
+                json_file.write("{{name: \"{0}\", count_rows: {1}, rows: [".format(self.get_clean_name_file().encode('utf-8'), self.principal_sheet.max_row if self.is_xlsx else self.principal_sheet.nrows))
 
                 for row in self.get_rows_of_xls():
-                    if index_row >= self.principal_sheet.max_row:
-                        break
+                    if self.is_xlsx:
+                        if index_row >= self.principal_sheet.max_row:
+                            break
 
                     json_file.write("{0}{1}".format(separator, json.dumps({'row': index_row, 'values': list(encode_row(row))})))
 
@@ -183,7 +206,9 @@ class XLSToJSONConverter(XLSConverterBase):
 
                     index_row += 1
 
-                if self.principal_sheet.max_row == index_row:
+    
+                max_rows = self.principal_sheet.max_row if self.is_xlsx else self.principal_sheet.nrows
+                if max_rows == index_row:
                     json_file.write("]}")
 
             return u'{0}converter/{1}/{2}'.format(settings.FQDN, self.format_extension, self.get_name_file())
@@ -209,8 +234,9 @@ class XLSToTxtConverter(XLSConverterBase):
             with open(self.get_path_file(), 'w') as txt_file:
                 index_row = 0
                 for row in self.get_rows_of_xls():
-                    if index_row >= self.principal_sheet.max_row:
-                        break
+                    if self.is_xlsx:
+                        if index_row >= self.principal_sheet.max_row:
+                            break
                     txt_file.write('{0}\n'.format(';'.join(list(encode_row(row, txt_convert=True)))))
                     index_row += 1 
 
@@ -238,8 +264,9 @@ class XLSToXMLConverter(XLSConverterBase):
                 xml_file.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?><rows>")
                 index_row = 0
                 for row in self.get_rows_of_xls():
-                    if index_row >= self.principal_sheet.max_row:
-                        break
+                    if self.is_xlsx:
+                        if index_row >= self.principal_sheet.max_row:
+                            break
                     xml_file.write("<row>")
                     for field in encode_row(row, txt_convert=True):
                         xml_file.write("<field>{0}</field>".format(field))
@@ -271,8 +298,9 @@ class XLSToHTMLConverter(XLSConverterBase):
                 html_file.write("<meta charset='utf-8'><table attr-name='{0}'>".format(self.get_clean_name_file().encode('utf-8')))
                 index_row = 0
                 for row in self.get_rows_of_xls():
-                    if index_row >= self.principal_sheet.max_row:
-                        break
+                    if self.is_xlsx:
+                        if index_row >= self.principal_sheet.max_row:
+                            break
                     html_file.write("<tr>")
                     for field in encode_row(row, txt_convert=True):
                         html_file.write("<td>{0}</td>".format(field))
