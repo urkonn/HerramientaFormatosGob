@@ -95,7 +95,7 @@ class XLSConverterBase(object):
             self.principal_sheet = self.xls_file.sheet_by_index(0)
 
     def load_temporal_file(self):
-        with open(self.memory_file.encode('utf-8')) as temporal_xls:
+        with open(self.memory_file) as temporal_xls:
             self.memory_file = temporal_xls
 
     def get_rows_of_xls(self):
