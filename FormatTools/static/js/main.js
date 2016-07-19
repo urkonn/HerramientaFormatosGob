@@ -90,17 +90,46 @@ var dropzone = new Dropzone('#my-awesome-dropzone', {
       xhr.setRequestHeader("X-CSRFToken", csrftoken);
     });
 
+    var interval_id = null,
+        link_interval = null,
+        count_error = 0;
+
+    function progress_show(){
+      $.post(link_interval).success(function(response){
+          if(response.status === 'PROGRESS'){
+            $('.percent').find('h4').html("% " + response.progress.current.toString())
+          } else if (response.status === 'SUCCESS'){
+            swal({
+              confirmButtonText: "DESCARGAR",
+              title: "Éxito",
+              text: "Archivo convertido correctamente",
+              type: "success" },
+            function(){
+              window.open(response.link,'_blank');
+            });
+            $('.loading-document').css('display', 'none');
+            clearInterval(interval_id);
+          } else if (response.status === 'ERROR'){
+            count_error ++;
+            if (count_error > 3){
+              clearInterval(interval_id);
+              swal({
+              confirmButtonText: "OK",
+              title: "Error",
+              text: response.error,
+              type: "error" });
+              $('.loading-document').css('display', 'none');
+            }
+          }
+      });
+    }
+
+
     this.on("success", function(file, response, e) {
       if(response.status === 'ok'){
-        swal({
-          confirmButtonText: "DESCARGAR",
-          title: "Éxito",
-          text: "Archivo convertido correctamente",
-          type: "success" },
-        function(){
-          window.open(response.link,'_blank');
-        });
-        $('.loading-document').css('display', 'none');
+        link_interval = response.link
+        $('.percent').find('h4').html("% 0")
+        interval_id = setInterval(progress_show, 1000)
       }
 
       if(response.status === 'error'){
