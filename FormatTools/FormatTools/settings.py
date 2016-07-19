@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =  os.environ.get('SECRET_KEY', '1zs-_u)y90mt8^v*d-@0@^hr^vz84m#eu%6hvxyn&7mm*$q')
+SECRET_KEY =  os.environ.get('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', True)
@@ -141,8 +141,14 @@ FQDN = os.environ.get('FQDN', 'http://127.0.0.1:8000/')
 
 
 # CELERY STUFF
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6378'
+REDIS_TCP_ADDR_TASK = os.environ.get('REDISTASK_PORT_6379_TCP_ADDR', 'localhost')
+REDIS_TCP_PORT_TAKS = os.environ.get('REDISTASK_PORT_6379_TCP_PORT', '6379')
+
+REDIS_TCP_ADDR_RESPONSE = os.environ.get('REDISRESP_PORT_6379_TCP_ADDR', 'localhost')
+REDIS_TCP_PORT_RESPONSE = os.environ.get('REDISRESP_PORT_6379_TCP_PORT', '6378')
+
+BROKER_URL = 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_TASK, REDIS_TCP_PORT_TAKS)
+CELERY_RESULT_BACKEND = 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_RESPONSE, REDIS_TCP_PORT_RESPONSE)
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
