@@ -13,9 +13,9 @@ def save_temporary_xls(xls_file):
     de forma temporal en el sistema de archivos
     """
     base_path = os.path.join(settings.TEMPORAL_FILES_ROOT, "xls")
-    xls_file_path = os.path.join(base_path, xls_file.name)
+    xls_file_path = os.path.join(base_path, unicode(xls_file.name))
 
-    with open(unicode(xls_file_path), 'w') as temporal_file:
+    with open(xls_file_path.decode('utf-8'), 'w') as temporal_file:
         temporal_file.write(xls_file.read())
 
     return xls_file_path
