@@ -23,5 +23,5 @@ RUN supervisord -c /etc/supervisor/supervisord.conf && \
 	supervisorctl reread && supervisorctl update && supervisorctl start FormatToolscelery
 
 EXPOSE 8000
-CMD ["python", "project/FormatTools/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["/usr/lib/formats/bin/python", "project/FormatTools/manage.py", "runserver", "0.0.0.0:8000"]
 

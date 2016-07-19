@@ -26,7 +26,7 @@ def convert_to(request):
         raise Http404
 
     # Guardado temporal del xls o xlsx
-    save_temporary_xls(xls_file)
+    xls_file_path = save_temporary_xls(xls_file)
 
     # Creacion de la celery task
     result_celery = transform_file.delay(xls_file_path, format_to, xls_file.name)

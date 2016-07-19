@@ -18,6 +18,8 @@ def save_temporary_xls(xls_file):
     with open(xls_file_path, 'w') as temporal_file:
         temporal_file.write(xls_file.read())
 
+    return xls_file_path
+
 
 def encode_row(row, txt_convert=False, is_xlsx=False):
     """ Funcion que valida el encoding de un valor 
