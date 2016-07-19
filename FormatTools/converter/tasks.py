@@ -11,7 +11,7 @@ def transform_file(self, file_path, format_to, xls_name):
     de transformacion de los xls y xlsx
     """
     try:
-        converter_engine = XLSConverter.get_converter(unicode(format_to), unicode(file_path), unicode(xls_name))
+        converter_engine = XLSConverter.get_converter(format_to.encode('utf-8'), file_path.encode('utf-8'), xls_name.encode('utf-8'))
     except Exception, file_error:
         raise Exception(file_error)
 
