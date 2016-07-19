@@ -20,7 +20,7 @@ RUN touch /var/log/celery/format_beat.log && touch /var/log/celery/format_worker
 
 RUN supervisord -c /etc/supervisor/supervisord.conf && \
 	supervisorctl -c /etc/supervisor/supervisord.conf && \
-	supervisorctl reread && supervisorctl update && supervisorctl start FormatToolscelery
+	supervisorctl reread && supervisorctl update
 
 EXPOSE 8000
 CMD ["/usr/lib/formats/bin/python", "project/FormatTools/manage.py", "runserver", "0.0.0.0:8000"]

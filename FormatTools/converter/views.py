@@ -16,7 +16,7 @@ def convert_to(request):
     """
     # Se regresa el Formulario si no es peticion POST
     if request.method != 'POST':
-        return render(request, 'convert.html')
+        return render(request, 'convert.html', {'settings': settings})
 
     # Se validan los parametros POST
     xls_file = request.FILES.get('xls_file', None)

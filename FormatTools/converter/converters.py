@@ -13,9 +13,9 @@ def save_temporary_xls(xls_file):
     de forma temporal en el sistema de archivos
     """
     base_path = os.path.join(settings.TEMPORAL_FILES_ROOT, "xls")
-    xls_file_path = os.path.join(base_path, unicode(xls_file.name))
+    xls_file_path = os.path.join(base_path, xls_file.name)
 
-    with open(xls_file_path, 'w') as temporal_file:
+    with open(unicode(xls_file_path), 'w') as temporal_file:
         temporal_file.write(xls_file.read())
 
     return xls_file_path
@@ -95,7 +95,7 @@ class XLSConverterBase(object):
             self.principal_sheet = self.xls_file.sheet_by_index(0)
 
     def load_temporal_file(self):
-        with open(self.memory_file) as temporal_xls:
+        with open(unicode(self.memory_file)) as temporal_xls:
             self.memory_file = temporal_xls
 
     def get_rows_of_xls(self):
