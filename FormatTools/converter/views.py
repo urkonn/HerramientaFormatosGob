@@ -43,6 +43,7 @@ def download_file(request, path, file_name):
     Tipo Respuesta: HTTP RESPONSE Streaming
     """
 
+    file_name = file_name.decode('utf-8')
     xls_base = os.path.join(settings.TEMPORAL_FILES_ROOT, 'xls/')
     # Se recupera el archivo temporal
     try:
