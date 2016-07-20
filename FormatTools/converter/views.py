@@ -48,21 +48,23 @@ def download_file(request, path, file_name):
     # Se recupera el archivo temporal
     try:
         path_base = os.path.join(settings.TEMPORAL_FILES_ROOT, path)
-        xls_path = os.path.join(path_base, file_name)
-        file = open(xls_path.encode('utf-8'))
+        temp_path = os.path.join(path_base, file_name)
+        file = open(temp_path.encode('utf-8'))
     except IOError, e:
         raise Http404
 
     # Se genera la respuesta HTTP para la descarga
     response = StreamingHttpResponse((line for line in file), content_type='{0}'.format(XLSConverter.get_mime_type_of_file(path)))
-    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name)
+    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name.encode('utf-8'))
     
     # Se elimina el archivo temporal del disco duro
-    os.remove(os.path.join(path_base, file_name))
+    os.remove(temp_path.encode('utf-8'))
     try:
-        os.remove(os.path.join(xls_base, file_name.replace(path, 'xls')))
+        xls_path = os.path.join(xls_base, file_name.replace(path, 'xls'))
+        os.remove(xls_path.encode('utf-8'))
     except:
-        os.remove(os.path.join(xls_base, file_name.replace(path, 'xlsx')))
+        xls_path = os.path.join(xls_base, file_name.replace(path, 'xlsx'))
+        os.remove(xls_path.encode('utf-8'))
 
     return response
 
