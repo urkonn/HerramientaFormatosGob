@@ -125,7 +125,7 @@ class XLSConverterBase(object):
         para recorrer todas las filas de la hoja de trabajo
         Tipo de Retorno: Function
         """
-        return u'{0}.{1}'.format(self.get_clean_name_file(), self.format_extension)
+        return '{0}.{1}'.format(self.get_clean_name_file(), self.format_extension)
 
     def get_clean_name_file(self):
         """ Funcion que devuelve una funcion generadora
@@ -155,7 +155,7 @@ class XLSConverterBase(object):
         """
         Funcion que devuelve el link de descarga del archivo
         """
-        return u'{0}converter/download/{1}/{2}'.format(settings.FQDN, self.format_extension, self.get_name_file())
+        return '{0}converter/download/{1}/{2}'.format(settings.FQDN, self.format_extension, self.get_name_file())
 
     def convert(self):
         """ Funcion que convierte el archivo xls
