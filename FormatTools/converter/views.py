@@ -47,7 +47,7 @@ def download_file(request, path, file_name):
     # Se recupera el archivo temporal
     try:
         path_base = os.path.join(settings.TEMPORAL_FILES_ROOT, path)
-        file = open(os.path.join(path_base, file_name.decode('utf-8')))
+        file = open(os.path.join(path_base, file_name))
     except IOError, e:
         raise Http404
 
