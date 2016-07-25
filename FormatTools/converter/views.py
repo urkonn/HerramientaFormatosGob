@@ -3,6 +3,7 @@ from celery.result import AsyncResult
 from django.shortcuts import render
 from django.conf import settings
 from django.http import JsonResponse, Http404, StreamingHttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from .converters import XLSConverter, save_temporary_xls
 from .tasks import transform_file
 
@@ -69,6 +70,7 @@ def download_file(request, path, file_name):
     return response
 
 
+@csrf_exempt
 def get_progress_task(request, task_id):
     if request.method != 'POST':
         raise Http404
