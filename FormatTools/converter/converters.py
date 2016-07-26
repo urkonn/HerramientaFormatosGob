@@ -72,6 +72,7 @@ class XLSConverter:
             if decoder.format_extension == format:
                 return decoder.get_mime_type()
 
+
 class XLSConverterBase(object):
     """ Clase base de los convertidores
     contiene metodos comunes de todos los convertidores
@@ -217,7 +218,7 @@ class XLSToJSONConverter(XLSConverterBase):
 
 
             with open(self.get_path_file(), 'w') as json_file:
-                json_file.write("{{name: \"{0}\", count_rows: {1}, rows: [".format(self.get_clean_name_file().encode('utf-8'), self.principal_sheet.max_row if self.is_xlsx else self.principal_sheet.nrows))
+                json_file.write("{{name: \"{0}\", count_rows: {1}, rows: [".format(self.get_clean_name_file(), self.principal_sheet.max_row if self.is_xlsx else self.principal_sheet.nrows))
 
                 for row in self.get_rows_of_xls():
                     json_file.write("{0}{1}".format(separator, json.dumps({'row': index_row, 'values': list(encode_row(row, is_xlsx=self.is_xlsx))})))
@@ -311,7 +312,7 @@ class XLSToHTMLConverter(XLSConverterBase):
             rows_count = self.get_total_of_rows()
             counter = 1
             with open(self.get_path_file(), 'w') as html_file:
-                html_file.write("<meta charset='utf-8'><table attr-name='{0}'>".format(self.get_clean_name_file().encode('utf-8')))
+                html_file.write("<meta charset='utf-8'><table attr-name='{0}'>".format(self.get_clean_name_file()))
 
                 for row in self.get_rows_of_xls():
                     html_file.write("<tr>")

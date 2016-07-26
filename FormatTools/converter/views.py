@@ -10,7 +10,8 @@ from .tasks import transform_file
 
 # Create your views here.
 def convert_to(request):
-    """ Vista que procesa la conversion 
+    """ 
+    Vista que procesa la conversion 
     de un archivo XLS, XLSX a un formato destino
     URL: /converter/convert/
     Tipo Respuesta: JSON
@@ -39,8 +40,9 @@ def convert_to(request):
 
 
 def download_file(request, path, file_name):
-    """ Vista que procesa la descarga de un archivo temporal
-    URL: /converter/(format)/(filename)
+    """ 
+    Vista que procesa la descarga de un archivo temporal
+    URL: /converter/{format}/{filename}
     Tipo Respuesta: HTTP RESPONSE Streaming
     """
 
@@ -72,6 +74,11 @@ def download_file(request, path, file_name):
 
 @csrf_exempt
 def get_progress_task(request, task_id):
+    """
+    Vista que retorna el % de progreso de una tarea
+    URL: /converter/progress/{task_id}/
+    Respuesta: JsonResponse
+    """
     if request.method != 'POST':
         raise Http404
 
@@ -87,7 +94,7 @@ def get_progress_task(request, task_id):
         try:
             return JsonResponse({'status': result.status, 'progress': result.result})
         except Exception, e:
-            return JsonResponse({'status': 'ERROR', 'progress': str(e)})
+            return JsonResponse({'status': 'ERROR', 'error': str(e)})
 
     return JsonResponse({'status': 'ERROR', 'error': 'Lo sentimos vuelve a intentarlo mas tarde', 'status': result.status})
 

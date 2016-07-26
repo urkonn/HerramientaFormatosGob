@@ -24,6 +24,7 @@ SECRET_KEY =  os.environ.get('SECRET_KEY', '1zs-_u)y90mt8^v*d-@0@^hr^vz84m#eu%6h
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', True)
+IS_DEVELOP = os.environ.get('IS_DEVELOP', False)
 
 ALLOWED_HOSTS = []
 
@@ -147,8 +148,8 @@ REDIS_TCP_PORT_TAKS = os.environ.get('REDISTASK_PORT_6379_TCP_PORT', '6379')
 REDIS_TCP_ADDR_RESPONSE = os.environ.get('REDISRESP_PORT_6379_TCP_ADDR', '0.0.0.0')
 REDIS_TCP_PORT_RESPONSE = os.environ.get('REDISRESP_PORT_6379_TCP_PORT', '6378')
 
-BROKER_URL = 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_TASK, REDIS_TCP_PORT_TAKS) # 'redis://172.17.0.3:6379' # 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_TASK, REDIS_TCP_PORT_TAKS)
-CELERY_RESULT_BACKEND = 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_RESPONSE, REDIS_TCP_PORT_RESPONSE) # 'redis://172.17.0.4:6379'  # 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_RESPONSE, REDIS_TCP_PORT_RESPONSE)
+BROKER_URL = 'redis://172.17.0.3:6379' if IS_DEVELOP else 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_TASK, REDIS_TCP_PORT_TAKS)
+CELERY_RESULT_BACKEND = 'redis://172.17.0.4:6379' if IS_DEVELOP else 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_RESPONSE, REDIS_TCP_PORT_RESPONSE)
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
