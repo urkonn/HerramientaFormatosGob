@@ -1,6 +1,5 @@
 FROM ubuntu:14.04
-
-MAINTAINER Julio Acuña <urkonn@gmail.com>
+MAINTAINER Francisco Vaquero <francisco@opi.la>
 
 ENV FORMAT_HOME /usr/lib/formats
 
@@ -10,7 +9,6 @@ RUN mkdir /project && \
 RUN apt-get update && \
 	apt-get install -y supervisor python-virtualenv git && \
     virtualenv $FORMAT_HOME
-#RUN apk add --no-cache git
 
 RUN git clone https://github.com/vaquer/HerramientaFormatosGob.git /project && \
     $FORMAT_HOME/bin/pip install -r /project/requirements.txt
@@ -25,6 +23,5 @@ EXPOSE 8000
 
 ADD start.sh /start.sh
 
-# CMD ["/usr/lib/formats/bin/python", "project/FormatTools/manage.py", "runserver", "0.0.0.0:8000"]
 ENTRYPOINT ["/start.sh"]
 
