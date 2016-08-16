@@ -24,7 +24,7 @@ class ConverterTest(unittest.TestCase):
         de mi documento con el nuevo tipo de archivo.
         """
         self.browser.get('http://0.0.0.0:8000/converter/convert/')
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_1/paso1.png')
+        self.browser.save_screenshot('Historia_1/paso1.png')
 
         # Revisando titulo
         self.assertEqual(self.browser.title, 'Herramienta de formatos')
@@ -35,13 +35,13 @@ class ConverterTest(unittest.TestCase):
         button.click()
         self.assertIn(self.browser.find_element_by_tag_name('body').get_attribute('class'),  'modal-open')
         self.browser.find_element_by_css_selector('button.close').click()
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_1/paso2.png')
+        self.browser.save_screenshot('Historia_1/paso2.png')
         time.sleep(2)
 
         # Abrir cuadro de dialogo para seleccionar xls
         span = self.browser.find_element_by_css_selector('span#selecciona')
         span.click()
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_1/paso3.png')
+        self.browser.save_screenshot('Historia_1/paso3.png')
         time.sleep(8)
 
         div_formatos = self.browser.find_element_by_id('div_formatos')
@@ -53,23 +53,23 @@ class ConverterTest(unittest.TestCase):
             self.assertFalse('icon-disabled' in elemento.get_attribute('class'))
             elemento.click()
             self.assertTrue(boton_submit.is_enabled())
-            self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_1/paso4_{0}.png'.format(str(counter)))
+            self.browser.save_screenshot('Historia_1/paso4_{0}.png'.format(str(counter)))
             counter += 1
 
         # Verificar enviado a conversion
         boton_submit.click()
         self.assertIn('block', self.browser.find_element_by_css_selector('div.loading-document').get_attribute('style'))
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_1/paso5.png')
+        self.browser.save_screenshot('Historia_1/paso5.png')
         time.sleep(5)
 
         # Verificar ventana de confirmacion para descarga
         modal_ok = self.browser.find_element_by_css_selector('div.sweet-alert')
         self.assertTrue('visible' in modal_ok.get_attribute('class'))
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_1/paso6.png')
+        self.browser.save_screenshot('Historia_1/paso6.png')
 
         # Descarga de archivo
         modal_ok.find_element_by_css_selector('button.confirm').click()
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_1/paso7.png')
+        self.browser.save_screenshot('Historia_1/paso7.png')
         time.sleep(3)
 
     def test_convertir_xls_xlsx_a_formatos_abiertos_especificos(self):
@@ -78,7 +78,7 @@ class ConverterTest(unittest.TestCase):
         .json, .txt, .html, .csv y .xml
         """
         self.browser.get('http://0.0.0.0:8000/converter/convert/')
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_2/paso1.png')
+        self.browser.save_screenshot('Historia_2/paso1.png')
 
         div_formatos = self.browser.find_element_by_id('div_formatos')
         boton_submit = self.browser.find_element_by_id('submitButton')
@@ -99,7 +99,7 @@ class ConverterTest(unittest.TestCase):
 
         # Verificar carga de interfaz
         self.browser.get('http://0.0.0.0:8000/converter/convert/')
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_3/paso1.png')
+        self.browser.save_screenshot('Historia_3/paso1.png')
 
         div_formatos = self.browser.find_element_by_id('div_formatos')
         boton_submit = self.browser.find_element_by_id('submitButton')
@@ -109,19 +109,19 @@ class ConverterTest(unittest.TestCase):
         span.click()
         time.sleep(10)
         # Verificar nombre de archivo
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_3/paso2.png')
+        self.browser.save_screenshot('Historia_3/paso2.png')
 
         # Seleccion de un formato
         elemento = div_formatos.find_elements_by_css_selector('a.icon')[0]
         self.assertFalse('icon-disabled' in elemento.get_attribute('class'))
         elemento.click()
         self.assertTrue(boton_submit.is_enabled())
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_3/paso3.png')
+        self.browser.save_screenshot('Historia_3/paso3.png')
 
         # Se envia a conversion el archivo
         boton_submit.click()
         self.assertIn('block', self.browser.find_element_by_css_selector('div.loading-document').get_attribute('style'))
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_3/paso4.png')
+        self.browser.save_screenshot('Historia_3/paso4.png')
 
         time.sleep(1)
         div_flotante = self.browser.find_element_by_css_selector('div.loading-document')
@@ -133,7 +133,7 @@ class ConverterTest(unittest.TestCase):
         self.assertFalse('' == div_flotante.find_element_by_css_selector('.percent').find_element_by_tag_name('h4').text)
         # El porcentaje debe empezar en 0
         self.assertFalse('0' == div_flotante.find_element_by_css_selector('.percent').find_element_by_tag_name('h4').text)
-        self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_3/paso5.png')
+        self.browser.save_screenshot('Historia_3/paso5.png')
             
         time.sleep(2)
 
@@ -149,22 +149,22 @@ class ConverterTest(unittest.TestCase):
             # Verificar activacion de icono de formato
             elemento = div_formatos.find_elements_by_css_selector('a.icon')[indice_formato]
             self.assertFalse('icon-disabled' in elemento.get_attribute('class'))
-            self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_2/paso{0}_{1}_1.png'.format(str(paso_test), str(counter)))
+            self.browser.save_screenshot('Historia_2/paso{0}_{1}_1.png'.format(str(paso_test), str(counter)))
             elemento.click()
             #Verificar activacion de boton submit
             self.assertTrue(boton_submit.is_enabled())
-            self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_2/paso{0}_{1}_2.png'.format(str(paso_test), str(counter)))
+            self.browser.save_screenshot('Historia_2/paso{0}_{1}_2.png'.format(str(paso_test), str(counter)))
 
             # Verificar enviado a conversion
             boton_submit.click()
             self.assertIn('block', self.browser.find_element_by_css_selector('div.loading-document').get_attribute('style'))
-            self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_2/paso{0}_{1}_3.png'.format(str(paso_test), str(counter)))
+            self.browser.save_screenshot('Historia_2/paso{0}_{1}_3.png'.format(str(paso_test), str(counter)))
             time.sleep(3)
 
             # Verificar ventana de confirmacion para descarga
             modal_ok = self.browser.find_element_by_css_selector('div.sweet-alert')
             self.assertTrue('visible' in modal_ok.get_attribute('class'))
-            self.browser.save_screenshot('/home/frank/Functional Test/Entregable_11/Historia_2/paso{0}_{1}_4.png'.format(str(paso_test), str(counter)))
+            self.browser.save_screenshot('Historia_2/paso{0}_{1}_4.png'.format(str(paso_test), str(counter)))
             # Descarga de archivo
             modal_ok.find_element_by_css_selector('button.confirm').click()
             time.sleep(3)

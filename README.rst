@@ -51,7 +51,7 @@ Los comandos de consola para correr la aplicacion con toda la arquitectura neces
 
   docker run --name redistask -p 6379:6379 -d redis
   docker run --name redisresp -p 6378:6379 -d redis
-  docker run --name formats -v {{ruta_del_host_para_volumen}}:/project/FormatTools/media -e SECRET_KEY="{{secret_key}}" --link redistask:redistask --link redisresp:redisresp -p 80:80 formats
+  docker run --name formats -v {{ruta_del_host_para_volumen}}:/project/FormatTools/media -e SECRET_KEY="{{secret_key}}" --link redistask:redistask --link redisresp:redisresp -e FQDN="http://tudominio.com/" -e DEBUG=False -p 80:80 formats
 
 
 Despues en el navegador::
