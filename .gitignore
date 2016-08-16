@@ -5,4 +5,4 @@
 /FormatTools/media/files/html/*.html
 /FormatTools/media/files/txt/*.txt
 /FormatTools/media/files/xls/*
-
+FormatTools/performance.py
