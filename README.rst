@@ -56,4 +56,4 @@ Los comandos de consola para correr la aplicacion con toda la arquitectura neces
 
 Despues en el navegador::
 
-http://{{tu_dominio}}/converter/convert
+http://tudominio.com/converter/convert
