@@ -26,7 +26,10 @@ SECRET_KEY =  os.environ.get('SECRET_KEY', '1zs-_u)y90mt8^v*d-@0@^hr^vz84m#eu%6h
 DEBUG = os.environ.get('DEBUG', True)
 IS_DEVELOP = os.environ.get('IS_DEVELOP', False)
 
-ALLOWED_HOSTS = []
+# DOMAIN SETTINGS
+FQDN = os.environ.get('FQDN', 'http://0.0.0.0:8000/')
+
+ALLOWED_HOSTS = [FQDN.replace('http://', '').replace('/', '')]
 
 
 # Application definition
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'converter'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -136,10 +140,6 @@ MEDIA_URL = '/media/'
 
 #TEMPORAL_FILES
 TEMPORAL_FILES_ROOT = os.path.join(MEDIA_ROOT, 'files/')
-
-# DOMAIN SETTINGS
-FQDN = os.environ.get('FQDN', 'http://127.0.0.1:8000/')
-
 
 # CELERY STUFF
 REDIS_TCP_ADDR_TASK = os.environ.get('REDISTASK_PORT_6379_TCP_ADDR', '0.0.0.0')

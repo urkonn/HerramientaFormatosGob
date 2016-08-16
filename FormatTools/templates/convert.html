@@ -75,7 +75,7 @@
                   <p>
                     Esta herramienta te permite transformar un documento de Excel (.xls) a formatos abiertos cómo .csv, .html, .xml, .json y .txt.
                   </p>
-                  <button type="button" style="margin: 25px auto 0;" class="btn btn-primary" data-toggle='modal' data-target='.modal-home'>Recomendaciones</button>
+                  <button id="boton-recomendaciones" type="button" style="margin: 25px auto 0;" class="btn btn-primary" data-toggle='modal' data-target='.modal-home'>Recomendaciones</button>
 
                   <form action="." enctype="multipart/form-data" method="POST" style="height: 1300px;" id="myform">
                     {% csrf_token %}
@@ -88,14 +88,14 @@
                       <div class="dropzone-previews"></div> <!-- this is were the previews should be shown. -->
                       <div class="dz-message needsclick">
                         Arrastra un archivo aquí para cargarlo<br>
-                        <span class="note needsclick">ó <span class="underline">seleccionalo desde tu computadora</span></span>
+                        <span class="note needsclick">ó <span id="selecciona" class="underline">seleccionalo desde tu computadora</span></span>
                       </div>
                       <p id="feedback"></p>
                     </div><br/>
                     <h2 class="opacity-text disabled-elem" style="font-weight: 600;">Paso 2</h2>
                     <p class="opacity-text disabled-elem">Selecciona el formato destino de tu archivo y da click en ‘convertir’</p>
                     <div class="row grand-row">
-                      <div class="col-sm-8 col-sm-offset-3">
+                      <div class="col-sm-8 col-sm-offset-3" id="div_formatos">
                         <div class="col-sm-2">
                           <a href="javascript:void(0);" data-type="xml" class="icon-select icon-disabled">
                                 <image src="{% static "svg/xml.svg" %}" class="svg">
@@ -160,7 +160,7 @@
                   <li>Solo se puede transformar un archivo a la vez.</li>
                   <li>El contenido del documento debe existir unicamente en una hoja de trabajo.</li>
                   <li>La información debe estar ordenada por columnas.</li>
-                  <li>Todas las columnas deben 0contener un título para que el resultado sea legible correctamente.</li>
+                  <li>Todas las columnas deben contener un título para que el resultado sea legible correctamente.</li>
                   <li>El tamaño máximo de archivos para convertir es de 150mb.</li>
                 </ol>
             </div>
